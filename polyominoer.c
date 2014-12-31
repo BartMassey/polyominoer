@@ -1,3 +1,10 @@
+/*
+ * Copyright © 2014 Bart Massey
+ * [This program is licensed under the "MIT License"]
+ * Please see the file COPYING in the source
+ * distribution of this software for license terms.
+ */
+
 /* Polyomino solver. Currently just four-ominoes. */
 
 /* The polyominos:
@@ -187,7 +194,7 @@ int main(int argc, char **argv) {
 #endif
 
     assert(argc == 3);
-    assert(sscanf(argv[1], "%dx%d", &bw, &bh) == 2);
+    assert(sscanf(argv[1], "%dx%d", &bh, &bw) == 2);
     assert(bw <= MAX_BOARD_DIM && bh <= MAX_BOARD_DIM);
     for (int r = 0; r < bh; r++)
         for (int c = 0; c < bw; c++)
