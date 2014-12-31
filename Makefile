@@ -4,10 +4,12 @@
 # distribution of this software for license terms.
 
 CC = gcc
-CFLAGS = -g -Wall -std=c99 # -DDEBUG_ROTATE
+# CDEBUG = -g -DDEBUG_ROTATE
+CDEBUG = -O4
+CFLAGS =  $(CDEBUG) -Wall -std=c99
 
 polyominoer: polyominoer.o
-	gcc -g -o polyominoer polyominoer.o
+	gcc $(CDEBUG) -o polyominoer polyominoer.o
 
 clean:
 	-rm -f polyominoer polyominoer.o
