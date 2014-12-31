@@ -44,6 +44,9 @@ The program should compile pretty easily on most anything.
              P) ###
                   #
 
+             O) ##
+                ##
+
   The names were chosen to be as mnemonic as possible. Note
   that the board is untileable unless the number of `T`
   tiles is even (because of a parity consideration): this
