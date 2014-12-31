@@ -154,8 +154,12 @@ void place(char visual, int r0, int c0, square image, int h, int w) {
     for (int r = 0; r < h; r++) {
         for (int c = 0; c < w; c++) {
             if (image[r][c] != ' ') {
-                assert(board[r0 + r][c0 + c] == ' ');
-                board[r0 + r][c0 + c] = visual;
+                char *bp = &board[r0 + r][c0 + c];
+                if (visual == ' ')
+                    assert(*bp != ' ');
+                else
+                    assert(*bp == ' ');
+                *bp = visual;
             }
         }
     }
