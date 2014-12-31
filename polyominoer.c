@@ -59,14 +59,14 @@ static struct shape fourominoes[] = {
 
 static const int nfourominoes = sizeof(fourominoes) / sizeof(struct shape);
 
-void copy_tiles(tiles source, tiles dest) {
+static void copy_tiles(tiles source, tiles dest) {
     for (int i = 0; i < 4; i++) {
         dest[i][0] = source[i][0];
         dest[i][1] = source[i][1];
     }
 }
 
-void rotate(int r, tiles piece) {
+static void rotate(int r, tiles piece) {
     while (r-- > 0) {
         int h = 0;
         for (int i = 0; i < 4; i++)
@@ -85,7 +85,8 @@ void rotate(int r, tiles piece) {
 
 typedef char square[4][4];
 
-void render_piece(tiles source, char visual, square dest, int *w, int *h) {
+static void render_piece(tiles source, char visual, square dest,
+                         int *w, int *h) {
     *h = 0;
     *w = 0;
     for (int i = 0; i < 4; i++)
@@ -102,7 +103,8 @@ void render_piece(tiles source, char visual, square dest, int *w, int *h) {
     }
 }
 
-void print_piece(tiles source, char visual) {
+#ifdef DEBUG_ROTATE
+static void print_piece(tiles source, char visual) {
     square dest;
     int w, h;
     render_piece(source, visual, dest, &w, &h);
@@ -113,7 +115,7 @@ void print_piece(tiles source, char visual) {
     }
 }
 
-void show_rotations() {
+static void show_rotations() {
     for (int i = 0; i < nfourominoes; i++) {
         printf("%c\n", fourominoes[i].name);
         for (int r = 0; r < fourominoes[i].asymmetries; r++) {
@@ -129,8 +131,9 @@ void show_rotations() {
         printf("\n");
     }
 }
+#endif
 
-int lookup_piece(char name) {
+static int lookup_piece(char name) {
     for (int i = 0; i < nfourominoes; i++)
         if (fourominoes[i].name == name)
             return i;
@@ -158,7 +161,7 @@ static void print_board() {
     }
 }
 
-int fits(int r0, int c0, square image, int h, int w) {
+static int fits(int r0, int c0, square image, int h, int w) {
     for (int r = 0; r < h; r++)
         for (int c = 0; c < w; c++)
             if (image[r][c] != ' ' && board[r0 + r][c0 + c] != ' ')
@@ -166,7 +169,7 @@ int fits(int r0, int c0, square image, int h, int w) {
     return 1;
 }
 
-void place(char visual, int r0, int c0, square image, int h, int w) {
+static void place(char visual, int r0, int c0, square image, int h, int w) {
     for (int r = 0; r < h; r++) {
         for (int c = 0; c < w; c++) {
             if (image[r][c] != ' ') {
@@ -185,7 +188,7 @@ void place(char visual, int r0, int c0, square image, int h, int w) {
 uint64_t leaves = 0;
 #endif
 
-void try_fit(int idx, char *pieces) {
+static void try_fit(int idx, char *pieces) {
     if (pieces[idx] == '\0') {
 #ifdef DEBUG_PROGRESS
         fprintf(stderr, "\n");
