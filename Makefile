@@ -4,7 +4,7 @@
 # distribution of this software for license terms.
 
 CC = gcc
-# CDEBUG = -g -DDEBUG_ROTATE -DDEBUG_PROGRESS=1000000000
+# CDEBUG = -g -DDEBUG_ROTATE -DDEBUG_PROGRESS=1000000
 CDEBUG = -O4
 CFLAGS =  $(CDEBUG) -Wall -std=c99
 

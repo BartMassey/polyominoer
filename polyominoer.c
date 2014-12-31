@@ -35,9 +35,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#ifdef DEBUG_PROGRESS
 #include <inttypes.h>
-#endif
 
 typedef int point[2];
 typedef point tiles[4];
@@ -184,18 +182,19 @@ static void place(char visual, int r0, int c0, square image, int h, int w) {
     }
 }
 
-#ifdef DEBUG_PROGRESS
 uint64_t leaves = 0;
-#endif
+
+static void report_leaves() {
+    fprintf(stderr, "%" PRIu64 " leaves examined\n", leaves);
+}
 
 static void try_fit(int idx, char *pieces) {
-#ifdef DEBUG_PROGRESS
     int found_child = 0;
-#endif
     if (pieces[idx] == '\0') {
 #ifdef DEBUG_PROGRESS
         fprintf(stderr, "\n");
 #endif
+        report_leaves();
         print_board();
         exit(0);
     }
@@ -226,9 +225,7 @@ static void try_fit(int idx, char *pieces) {
                     }
                     if (p < nplacements)
                         continue;
-#ifdef DEBUG_PROGRESS
                     found_child = 1;
-#endif
 
                     struct placement *pp = &placements[nplacements];
                     pp->name = fourominoes[om].name;
@@ -246,13 +243,13 @@ static void try_fit(int idx, char *pieces) {
             }
         }
     }
-#ifdef DEBUG_PROGRESS
     if (!found_child) {
         leaves++;
+#ifdef DEBUG_PROGRESS
         if (leaves % DEBUG_PROGRESS == 0)
             fprintf(stderr, ".");
-    }
 #endif
+    }
 }
 
 
@@ -279,6 +276,7 @@ int main(int argc, char **argv) {
     assert(nt % 2 == 0);
 
     try_fit(0, pieces);
+    report_leaves();
     printf("no solution found\n");
     return 1;
 }
