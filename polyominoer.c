@@ -35,6 +35,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef DEBUG_PROGRESS
+#include <inttypes.h>
+#endif
 
 typedef int point[2];
 typedef point tiles[4];
@@ -169,8 +172,15 @@ void place(char visual, int r0, int c0, square image, int h, int w) {
     }
 }
 
+#ifdef DEBUG_PROGRESS
+uint64_t leaves = 0;
+#endif
+
 void try_fit(int idx, char *pieces) {
     if (pieces[idx] == '\0') {
+#ifdef DEBUG_PROGRESS
+        fprintf(stderr, "\n");
+#endif
         print_board();
         exit(0);
     }
@@ -190,6 +200,14 @@ void try_fit(int idx, char *pieces) {
                     try_fit(idx + 1, pieces);
                     place(' ', r0, c0, image, h, w);
                 }
+#ifdef DEBUG_PROGRESS
+                else {
+                    leaves++;
+                    if (leaves % DEBUG_PROGRESS == 0) {
+                        fprintf(stderr, ".");
+                    }
+                }
+#endif
             }
         }
     }
