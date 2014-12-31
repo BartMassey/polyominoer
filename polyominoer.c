@@ -140,8 +140,17 @@ int lookup_piece(char name) {
 int bw, bh;
 #define MAX_BOARD_DIM 20
 static char board[MAX_BOARD_DIM][MAX_BOARD_DIM];
+#define MAX_PLACEMENTS (MAX_BOARD_DIM*MAX_BOARD_DIM/4)
 
-void print_board() {
+struct placement {
+    char name;
+    point loc;
+    int rot;
+};
+static struct placement placements[MAX_PLACEMENTS];
+static int nplacements = 0;
+
+static void print_board() {
     for (int r = 0; r < bh; r++) {
         for (int c = 0; c < bw; c++)
             printf("%c", board[r][c]);
@@ -196,8 +205,24 @@ void try_fit(int idx, char *pieces) {
         for (int r0 = 0; r0 < bh - h + 1; r0++) {
             for (int c0 = 0; c0 < bw - w + 1; c0++) {
                 if (fits(r0, c0, image, h, w)) {
+                    for (int p = 0; p < nplacements; p++) {
+                        struct placement *pp = &placements[p];
+                        if (pp->name != fourominoes[om].name)
+                            continue;
+                    }
+
+                    assert (nplacements < MAX_PLACEMENTS);
+                    struct placement *pp = &placements[nplacements];
+                    pp->name = fourominoes[om].name;
+                    pp->loc[0] = r0;
+                    pp->loc[1] = c0;
+                    pp->rot = rot;
+                    nplacements++;
                     place('a' + idx, r0, c0, image, h, w);
+
                     try_fit(idx + 1, pieces);
+
+                    --nplacements;
                     place(' ', r0, c0, image, h, w);
                 }
 #ifdef DEBUG_PROGRESS
