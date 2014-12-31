@@ -1,9 +1,33 @@
+# 0s
+# 2621 leaves examined
 ./polyominoer 4x7 LP22TTI
 bbcceee
 bddccea
 bfddaaa
 fffgggg
 
+# 0.01s
+# 6835 leaves examined
+./polyominoer 6x8 OOI22TTLLPPP
+aabbcccc
+aabbddhh
+eeiijddh
+feeijjjh
+ffgiklll
+fgggkkkl
+
+# 0.1s
+# 90517 leaves examined
+./polyominoer 6x8 OOITTLLPPP22
+aabbcccc
+aabbddde
+fffkhdee
+flkkhhhe
+llkgijjj
+lgggiiij
+
+# 1m19s
+# 134016781 leaves examined
 ./polyominoer 6x8 TTILLPPPOO22
 aaabcccc
 fabbggkh
