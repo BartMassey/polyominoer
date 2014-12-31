@@ -189,6 +189,9 @@ uint64_t leaves = 0;
 #endif
 
 static void try_fit(int idx, char *pieces) {
+#ifdef DEBUG_PROGRESS
+    int found_child = 0;
+#endif
     if (pieces[idx] == '\0') {
 #ifdef DEBUG_PROGRESS
         fprintf(stderr, "\n");
@@ -223,6 +226,9 @@ static void try_fit(int idx, char *pieces) {
                     }
                     if (p < nplacements)
                         continue;
+#ifdef DEBUG_PROGRESS
+                    found_child = 1;
+#endif
 
                     struct placement *pp = &placements[nplacements];
                     pp->name = fourominoes[om].name;
@@ -237,17 +243,16 @@ static void try_fit(int idx, char *pieces) {
                     --nplacements;
                     place(' ', r0, c0, image, h, w);
                 }
-#ifdef DEBUG_PROGRESS
-                else {
-                    leaves++;
-                    if (leaves % DEBUG_PROGRESS == 0) {
-                        fprintf(stderr, ".");
-                    }
-                }
-#endif
             }
         }
     }
+#ifdef DEBUG_PROGRESS
+    if (!found_child) {
+        leaves++;
+        if (leaves % DEBUG_PROGRESS == 0)
+            fprintf(stderr, ".");
+    }
+#endif
 }
 
 
