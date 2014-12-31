@@ -207,6 +207,12 @@ int main(int argc, char **argv) {
     char *pieces = argv[2];
     for (int i = 0; i < strlen(pieces); i++)
         assert(lookup_piece(pieces[i]) >= 0);
+    assert(bw * bh == strlen(pieces) * 4);
+    int nt = 0;
+    for (int i = 0; i < strlen(pieces); i++)
+        if (pieces[i] == 'T')
+            nt++;
+    assert(nt % 2 == 0);
 
     try_fit(0, pieces);
     printf("no solution found\n");
