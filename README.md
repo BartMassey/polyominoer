@@ -50,9 +50,16 @@ The program should compile pretty easily on most anything.
   is checked up front.
 
 
-An example usage is
+An example usage is:
 
             polyominoer 4x7 LP22TTI
+
+which currently produces for me the output:
+
+            bbcceee
+            bddccea
+            bfddaaa
+            fffgggg
 
 ## Notes
 
