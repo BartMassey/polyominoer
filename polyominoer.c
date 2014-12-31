@@ -208,13 +208,22 @@ static void try_fit(int idx, char *pieces) {
         for (int r0 = 0; r0 < bh - h + 1; r0++) {
             for (int c0 = 0; c0 < bw - w + 1; c0++) {
                 if (fits(r0, c0, image, h, w)) {
-                    for (int p = 0; p < nplacements; p++) {
+                    assert (nplacements < MAX_PLACEMENTS);
+
+                    int p;
+                    for (p = 0; p < nplacements; p++) {
                         struct placement *pp = &placements[p];
                         if (pp->name != fourominoes[om].name)
                             continue;
+                        if (pp->loc[0] < r0)
+                            continue;
+                        if (pp->loc[0] == r0 && pp->loc[1] < c0)
+                            continue;
+                        break;
                     }
+                    if (p < nplacements)
+                        continue;
 
-                    assert (nplacements < MAX_PLACEMENTS);
                     struct placement *pp = &placements[nplacements];
                     pp->name = fourominoes[om].name;
                     pp->loc[0] = r0;
