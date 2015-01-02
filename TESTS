@@ -35,3 +35,13 @@ fffbgkkh
 iillgkhh
 iidllejj
 dddeeejj
+
+# 0s
+# 1117 leaves examined
+./polyominoer 6x6 PPLL22IOO
+aaabbb
+eeaffb
+geecff
+gcccdd
+ghhiid
+ghhiid
